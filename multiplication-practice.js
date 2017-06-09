@@ -9,7 +9,7 @@ var updateTimer = function() {
   } else {
     millisecondsRemaining -= 100;
     var minutes = Math.floor(millisecondsRemaining / 1000 / 60);
-    var seconds = (millisecondsRemaining - (minutes * 1000 * 60)) / 1000;
+    var seconds = Math.floor((millisecondsRemaining - (minutes * 1000 * 60)) / 1000);
     $('#timer').text(minutes + ':' + seconds);
   }
 };
