@@ -8,7 +8,9 @@ var updateTimer = function() {
     completeQuiz();
   } else {
     millisecondsRemaining -= 100;
-    $('#timer').text(millisecondsRemaining);
+    var minutes = Math.floor(millisecondsRemaining / 1000 / 60);
+    var seconds = (millisecondsRemaining - (minutes * 1000 * 60)) / 1000;
+    $('#timer').text(minutes + ':' + seconds);
   }
 };
 
