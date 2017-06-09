@@ -1,1 +1,14 @@
+#timer {
+  color: red;
+  font-size: 150%;
+}
 
+#problem-table > div {
+  display: inline-block;
+  height: 50px;
+  width: 100px;
+}
+
+#problem-table {
+  max-width: 1000px;
+}
