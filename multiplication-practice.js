@@ -14,7 +14,11 @@ var updateTimer = function() {
     millisecondsRemaining -= 100;
     var minutes = Math.floor(millisecondsRemaining / 1000 / 60);
     var seconds = Math.floor((millisecondsRemaining - (minutes * 1000 * 60)) / 1000);
-    $('#timer').text(minutes + ':' + seconds);
+    var separator = ':';
+    if (seconds < 10) {
+      separator = ':0';
+    }
+    $('#timer').text(minutes + separator + seconds);
   }
 };
 
