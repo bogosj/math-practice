@@ -4,8 +4,10 @@
 }
 
 #problem-table > div {
+  border: 1px solid black;
   display: inline-block;
   height: 50px;
+  padding: 10px;
   width: 100px;
 }
 
