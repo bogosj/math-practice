@@ -6,6 +6,10 @@ var getRandomInt = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var selectFirstInput = function() {
+  $($('#problem-table > div > input')[0]).focus();
+};
+
 var checkProblems = function() {
   var numCorrect = 0;
   $.map($('#problem-table > div'), function(e) {
@@ -18,6 +22,7 @@ var checkProblems = function() {
       elt.addClass('incorrect')
     }
   });
+  selectFirstInput();
   $('#timer').text('You got ' + numCorrect + ' of 100 questions correct.');
 };
 
@@ -49,7 +54,7 @@ var generateProblemTable = function() {
     var elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
     $('#problem-table').append(elt);
   };
-  $($('#problem-table > div > input')[0]).focus();
+  selectFirstInput();
 };
 
 var onStartClick = function() {
