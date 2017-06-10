@@ -49,6 +49,7 @@ var generateProblemTable = function() {
     var elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
     $('#problem-table').append(elt);
   };
+  $($('#problem-table > div > input')[0]).focus();
 };
 
 var onStartClick = function() {
