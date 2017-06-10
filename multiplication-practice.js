@@ -23,7 +23,7 @@ var checkProblems = function() {
 
 var updateTimer = function() {
   if (millisecondsRemaining == 0) {
-    window.clearInterval(timerId);
+    alert('Time is up!');
     completeQuiz();
   } else {
     millisecondsRemaining -= 100;
@@ -38,7 +38,8 @@ var updateTimer = function() {
 };
 
 var completeQuiz = function() {
-  alert('Quiz over');
+  window.clearInterval(timerId);
+  checkProblems();
 };
 
 var generateProblemTable = function() {
@@ -54,6 +55,10 @@ var onStartClick = function() {
   millisecondsRemaining = _FIVE_MINUTES;
   timerId = window.setInterval(updateTimer, 100);
   generateProblemTable();
+  var completeButton = $('<button>Check my answers</button>');
+  completeButton.click(completeQuiz);
+  $('#start-button').after(completeButton);
+  $('#start-button').remove();
 };
 
 var onLoad = function() {
