@@ -19,3 +19,11 @@
 #problem-table > div > input {
     width: 50px;
 }
+
+.correct {
+  background-color: lawngreen;
+}
+
+.incorrect {
+  background-color: red;
+}
