@@ -9,11 +9,7 @@
   height: 50px;
   margin: 2px;
   padding: 10px;
-  width: 100px;
-}
-
-#problem-table {
-  max-width: 1000px;
+  width: 90px;
 }
 
 #problem-table > div > input {
