@@ -15,3 +15,7 @@
 #problem-table {
   max-width: 1000px;
 }
+
+#problem-table > div > input {
+    width: 50px;
+}
