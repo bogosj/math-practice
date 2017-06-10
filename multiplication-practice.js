@@ -10,7 +10,7 @@ var checkProblems = function() {
   var numCorrect = 0;
   $.map($('#problem-table > div'), function(e) {
     var elt = $(e);
-    var input = x.find('input');
+    var input = elt.find('input');
     if (parseInt(eval(elt.text())) == parseInt(input.val())) {
       elt.addClass('correct');
       numCorrect += 1;
@@ -46,7 +46,7 @@ var generateProblemTable = function() {
   $('#problem-table').empty();
   for (var i=0; i<100; i++) {
     var problem = getRandomInt(0, 12) + '*' + getRandomInt(0, 12);
-    var elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="number">'));
+    var elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
     $('#problem-table').append(elt);
   };
 };
