@@ -61,10 +61,10 @@ var onStartClick = function() {
   millisecondsRemaining = _FIVE_MINUTES;
   timerId = window.setInterval(updateTimer, 100);
   generateProblemTable();
+  $('#start-button').remove();
   var completeButton = $('<button>Check my answers</button>');
   completeButton.click(completeQuiz);
-  $('#start-button').after(completeButton);
-  $('#start-button').remove();
+  $('#problem-table').after(completeButton);
 };
 
 var onLoad = function() {
