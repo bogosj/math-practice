@@ -1,10 +1,25 @@
-var _FIVE_MINUTES = 1 * 60 * 1000;
+var _FIVE_MINUTES = 5 * 60 * 1000;
 var millisecondsRemaining = _FIVE_MINUTES;
 var timerId;
 
 var getRandomInt = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+var checkProblems = function() {
+  var numCorrect = 0;
+  $.map($('#problem-table > div'), function(e) {
+    var elt = $(e);
+    var input = x.find('input');
+    if (parseInt(eval(elt.text())) == parseInt(input.val())) {
+      elt.addClass('correct');
+      numCorrect += 1;
+    } else {
+      elt.addClass('incorrect')
+    }
+  });
+  $('#timer').text('You got ' + numCorrect + ' of 100 questions correct.');
+};
 
 var updateTimer = function() {
   if (millisecondsRemaining == 0) {
