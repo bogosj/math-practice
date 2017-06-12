@@ -31,7 +31,7 @@ var updateTimer = function() {
     alert('Time is up!');
     completeQuiz();
   } else {
-    millisecondsRemaining -= 100;
+    millisecondsRemaining -= 1000;
     var minutes = Math.floor(millisecondsRemaining / 1000 / 60);
     var seconds = Math.floor((millisecondsRemaining - (minutes * 1000 * 60)) / 1000);
     var separator = ':';
@@ -59,7 +59,7 @@ var generateProblemTable = function() {
 
 var onStartClick = function() {
   millisecondsRemaining = _FIVE_MINUTES;
-  timerId = window.setInterval(updateTimer, 100);
+  timerId = window.setInterval(updateTimer, 1000);
   generateProblemTable();
   $('#start-button').remove();
   var completeButton = $('<button>Check my answers</button>');
