@@ -1,5 +1,5 @@
+const _TWO_MINUTES = 2 * 60 * 1000;
 const _FIVE_MINUTES = 5 * 60 * 1000;
-let millisecondsRemaining = _FIVE_MINUTES;
 let timerId;
 
 let getRandomInt = function(min, max) {
@@ -23,7 +23,7 @@ let checkProblems = function() {
     }
   });
   selectFirstInput();
-  $('#timer').text('You got ' + numCorrect + ' of 100 questions correct.');
+  $('#timer').text(`You got ${numCorrect} of ${$('#problem-table > div').length} questions correct.`);
 };
 
 let updateTimer = function() {
@@ -47,26 +47,62 @@ let completeQuiz = function() {
   checkProblems();
 };
 
-let generateProblemTable = function() {
+let generateProblemTable = function(problemType, numProblems) {
   $('#problem-table').empty();
-  for (let i=0; i<100; i++) {
-    let problem = getRandomInt(0, 12) + '*' + getRandomInt(0, 12);
+  for (let i=0; i<numProblems; i++) {
+    let problem = '';
+    if (problemType == 'mul') {
+      problem = getRandomInt(0, 12) + '*' + getRandomInt(0, 12);
+    }
+    if (problemType == 'add') {
+      while (true) {
+        problem = getRandomInt(0, 20) + '+' + getRandomInt(0, 20);
+        if (eval(problem) <= 20) {
+          break;
+        }
+      }
+    }
+    if (problemType == 'sub') {
+      while (true) {
+        problem = getRandomInt(0, 20) + '-' + getRandomInt(0, 20);
+        if (eval(problem) >= 0) {
+          break;
+        }
+      }
+    }
     let elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
     $('#problem-table').append(elt);
   };
   selectFirstInput();
 };
 
-let onStartClick = function() {
-  millisecondsRemaining = _FIVE_MINUTES;
+let problemType = function(e) {
+  let elt = $(e.target);
+  if (elt.hasClass('add')) {
+    return 'add';
+  }
+  if (elt.hasClass('sub')) {
+    return 'sub';
+  }
+  return 'mul';
+}
+
+let onStartClick = function(e) {
+  let numProblems = 50;
+  millisecondsRemaining = _TWO_MINUTES;
+  if (problemType(e) == 'mul') {
+    numProblems = 100;
+    millisecondsRemaining = _FIVE_MINUTES;
+  }
   timerId = window.setInterval(updateTimer, 1000);
-  generateProblemTable();
-  $('#start-button').remove();
+  updateTimer();
+  generateProblemTable(problemType(e), numProblems);
+  $('.start-button').remove();
   let completeButton = $('<button>Check my answers</button>');
   completeButton.click(completeQuiz);
   $('#problem-table').after(completeButton);
 };
 
 $(document).ready(function() {
-  $('#start-button').click(onStartClick);
+  $('.start-button').click(onStartClick);
 });
