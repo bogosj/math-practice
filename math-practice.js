@@ -1,20 +1,20 @@
-var _FIVE_MINUTES = 5 * 60 * 1000;
-var millisecondsRemaining = _FIVE_MINUTES;
-var timerId;
+const _FIVE_MINUTES = 5 * 60 * 1000;
+let millisecondsRemaining = _FIVE_MINUTES;
+let timerId;
 
-var getRandomInt = function(min, max) {
+let getRandomInt = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var selectFirstInput = function() {
+let selectFirstInput = function() {
   $($('#problem-table > div > input')[0]).focus();
 };
 
-var checkProblems = function() {
-  var numCorrect = 0;
+let checkProblems = function() {
+  let numCorrect = 0;
   $.map($('#problem-table > div'), function(e) {
-    var elt = $(e);
-    var input = elt.find('input');
+    let elt = $(e);
+    let input = elt.find('input');
     if (parseInt(eval(elt.text())) == parseInt(input.val())) {
       elt.addClass('correct');
       numCorrect += 1;
@@ -26,15 +26,15 @@ var checkProblems = function() {
   $('#timer').text('You got ' + numCorrect + ' of 100 questions correct.');
 };
 
-var updateTimer = function() {
+let updateTimer = function() {
   if (millisecondsRemaining == 0) {
     alert('Time is up!');
     completeQuiz();
   } else {
     millisecondsRemaining -= 1000;
-    var minutes = Math.floor(millisecondsRemaining / 1000 / 60);
-    var seconds = Math.floor((millisecondsRemaining - (minutes * 1000 * 60)) / 1000);
-    var separator = ':';
+    let minutes = Math.floor(millisecondsRemaining / 1000 / 60);
+    let seconds = Math.floor((millisecondsRemaining - (minutes * 1000 * 60)) / 1000);
+    let separator = ':';
     if (seconds < 10) {
       separator = ':0';
     }
@@ -42,33 +42,31 @@ var updateTimer = function() {
   }
 };
 
-var completeQuiz = function() {
+let completeQuiz = function() {
   window.clearInterval(timerId);
   checkProblems();
 };
 
-var generateProblemTable = function() {
+let generateProblemTable = function() {
   $('#problem-table').empty();
-  for (var i=0; i<100; i++) {
-    var problem = getRandomInt(0, 12) + '*' + getRandomInt(0, 12);
-    var elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
+  for (let i=0; i<100; i++) {
+    let problem = getRandomInt(0, 12) + '*' + getRandomInt(0, 12);
+    let elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
     $('#problem-table').append(elt);
   };
   selectFirstInput();
 };
 
-var onStartClick = function() {
+let onStartClick = function() {
   millisecondsRemaining = _FIVE_MINUTES;
   timerId = window.setInterval(updateTimer, 1000);
   generateProblemTable();
   $('#start-button').remove();
-  var completeButton = $('<button>Check my answers</button>');
+  let completeButton = $('<button>Check my answers</button>');
   completeButton.click(completeQuiz);
   $('#problem-table').after(completeButton);
 };
 
-var onLoad = function() {
+$(document).ready(function() {
   $('#start-button').click(onStartClick);
-};
-
-$(document).ready(onLoad);
+});
