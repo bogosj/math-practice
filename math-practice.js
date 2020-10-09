@@ -23,6 +23,7 @@ let checkProblems = function() {
     }
   });
   selectFirstInput();
+  $('#check-answers').remove();
   $('#timer').text(`You got ${numCorrect} of ${$('#problem-table > div').length} questions correct.`);
 };
 
@@ -98,7 +99,7 @@ let onStartClick = function(e) {
   updateTimer();
   generateProblemTable(problemType(e), numProblems);
   $('.start-button').remove();
-  let completeButton = $('<button>Check my answers</button>');
+  let completeButton = $('<button id="check-answers">Check my answers</button>');
   completeButton.click(completeQuiz);
   $('#problem-table').after(completeButton);
 };
