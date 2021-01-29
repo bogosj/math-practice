@@ -1,5 +1,4 @@
-const _TWO_MINUTES = 2 * 60 * 1000;
-const _FIVE_MINUTES = 5 * 60 * 1000;
+let millisecondsRemaining;
 let timerId;
 
 let getRandomInt = function(min, max) {
@@ -90,15 +89,14 @@ let problemType = function(e) {
 
 let onStartClick = function(e) {
   let numProblems = 50;
-  millisecondsRemaining = _TWO_MINUTES;
   if (problemType(e) == 'mul') {
     numProblems = 100;
-    millisecondsRemaining = _FIVE_MINUTES;
   }
+  millisecondsRemaining = $(e.target).siblings("input").val() * 60 * 1000
   timerId = window.setInterval(updateTimer, 1000);
   updateTimer();
   generateProblemTable(problemType(e), numProblems);
-  $('.start-button').remove();
+  $('.buttons').remove();
   let completeButton = $('<button id="check-answers">Check my answers</button>');
   completeButton.click(completeQuiz);
   $('#problem-table').after(completeButton);

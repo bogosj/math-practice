@@ -12,6 +12,10 @@
   width: 90px;
 }
 
+.buttons input[type=number] {
+  width: 3em;
+}
+
 #problem-table > div > input {
   width: 50px;
 }
