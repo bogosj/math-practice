@@ -1,15 +1,15 @@
 let millisecondsRemaining;
 let timerId;
 
-let getRandomInt = function(min, max) {
+let getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-let selectFirstInput = function() {
+let selectFirstInput = function () {
   document.querySelector('#problem-table > div > input').focus();
 };
 
-let checkProblems = function() {
+let checkProblems = function () {
   let numCorrect = 0;
   document.querySelectorAll('#problem-table > div').forEach(elt => {
     let input = elt.querySelector('input');
@@ -26,7 +26,7 @@ let checkProblems = function() {
   document.getElementById('timer').innerText = `You got ${numCorrect} of ${numQuestions} questions correct.`;
 };
 
-let updateTimer = function() {
+let updateTimer = function () {
   if (millisecondsRemaining == 0) {
     alert('Time is up!');
     completeQuiz();
@@ -42,12 +42,12 @@ let updateTimer = function() {
   }
 };
 
-let completeQuiz = function() {
+let completeQuiz = function () {
   window.clearInterval(timerId);
   checkProblems();
 };
 
-let generateProblemTable = function(problemType, numProblems) {
+let generateProblemTable = function (problemType, numProblems) {
   document.getElementById('problem-table').innerHTML = '';
   for (let i = 0; i < numProblems; i++) {
     let problem = '';
@@ -79,7 +79,7 @@ let generateProblemTable = function(problemType, numProblems) {
   selectFirstInput();
 };
 
-let problemType = function(e) {
+let problemType = function (e) {
   let elt = e.target;
   if (elt.classList.contains('add')) {
     return 'add';
@@ -90,7 +90,7 @@ let problemType = function(e) {
   return 'mul';
 }
 
-let onStartClick = function(e) {
+let onStartClick = function (e) {
   let numProblems = 50;
   if (problemType(e) == 'mul') {
     numProblems = 100;
