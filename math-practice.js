@@ -6,24 +6,24 @@ let getRandomInt = function(min, max) {
 }
 
 let selectFirstInput = function() {
-  $($('#problem-table > div > input')[0]).focus();
+  document.querySelector('#problem-table > div > input').focus();
 };
 
 let checkProblems = function() {
   let numCorrect = 0;
-  $.map($('#problem-table > div'), function(e) {
-    let elt = $(e);
-    let input = elt.find('input');
-    if (parseInt(eval(elt.text())) == parseInt(input.val())) {
-      elt.addClass('correct');
+  document.querySelectorAll('#problem-table > div').forEach(elt => {
+    let input = elt.querySelector('input');
+    if (parseInt(eval(elt.innerText)) == parseInt(input.value)) {
+      elt.classList.add('correct');
       numCorrect += 1;
     } else {
-      elt.addClass('incorrect')
+      elt.classList.add('incorrect')
     }
   });
   selectFirstInput();
-  $('#check-answers').remove();
-  $('#timer').text(`You got ${numCorrect} of ${$('#problem-table > div').length} questions correct.`);
+  document.querySelector('.check-answers').remove();
+  let numQuestions = document.querySelectorAll('#problem-table > div').length;
+  document.getElementById('timer').innerText = `You got ${numCorrect} of ${numQuestions} questions correct.`;
 };
 
 let updateTimer = function() {
@@ -38,7 +38,7 @@ let updateTimer = function() {
     if (seconds < 10) {
       separator = ':0';
     }
-    $('#timer').text(minutes + separator + seconds);
+    document.getElementById('timer').innerText = `${minutes}${separator}${seconds}`;
   }
 };
 
@@ -48,8 +48,8 @@ let completeQuiz = function() {
 };
 
 let generateProblemTable = function(problemType, numProblems) {
-  $('#problem-table').empty();
-  for (let i=0; i<numProblems; i++) {
+  document.getElementById('problem-table').innerHTML = '';
+  for (let i = 0; i < numProblems; i++) {
     let problem = '';
     if (problemType == 'mul') {
       problem = getRandomInt(0, 12) + '*' + getRandomInt(0, 12);
@@ -70,18 +70,21 @@ let generateProblemTable = function(problemType, numProblems) {
         }
       }
     }
-    let elt = $('<div/>').text(problem).append($('<hr>')).append($('<input type="text">'));
-    $('#problem-table').append(elt);
+    let elt = document.createElement('div');
+    elt.innerText = problem;
+    elt.appendChild(document.createElement('hr'));
+    elt.appendChild(document.createElement('input', { 'type': 'text' }));
+    document.getElementById('problem-table').appendChild(elt);
   };
   selectFirstInput();
 };
 
 let problemType = function(e) {
-  let elt = $(e.target);
-  if (elt.hasClass('add')) {
+  let elt = e.target;
+  if (elt.classList.contains('add')) {
     return 'add';
   }
-  if (elt.hasClass('sub')) {
+  if (elt.classList.contains('sub')) {
     return 'sub';
   }
   return 'mul';
@@ -92,16 +95,21 @@ let onStartClick = function(e) {
   if (problemType(e) == 'mul') {
     numProblems = 100;
   }
-  millisecondsRemaining = $(e.target).siblings("input").val() * 60 * 1000
+  millisecondsRemaining = e.target.parentElement.querySelector('input').value * 60 * 1000;
   timerId = window.setInterval(updateTimer, 1000);
   updateTimer();
   generateProblemTable(problemType(e), numProblems);
-  $('.buttons').remove();
-  let completeButton = $('<button id="check-answers">Check my answers</button>');
-  completeButton.click(completeQuiz);
-  $('#problem-table').after(completeButton);
+  document.querySelector('.buttons').remove();
+  let completeButton = document.createElement('button');
+  completeButton.classList.add('check-answers');
+  completeButton.innerText = 'Check my answers';
+  completeButton.addEventListener('click', completeQuiz)
+  let table = document.getElementById('problem-table');
+  table.parentElement.insertBefore(completeButton, table.nextSibling);
 };
 
-$(document).ready(function() {
-  $('.start-button').click(onStartClick);
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.start-button').forEach(elt => {
+    elt.addEventListener('click', onStartClick);
+  });
 });
